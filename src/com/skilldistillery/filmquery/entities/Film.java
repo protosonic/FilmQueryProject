@@ -126,8 +126,10 @@ public class Film {
 		String data = null;
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append("---------FILM--------\n" + title)
-				.append("\n(" + releaseYear + ")\n")
+		builder.append("---------FILM--------\n" + title) 
+				.append("\n(" + releaseYear + ")")
+				.append("\n" + language) // User story #4
+				.append("\n[Rated " + rating + "]\n")
 				.append("\n\"" + description + "\"\n")
 				.append("\n---------------------");
 		return builder.toString();
