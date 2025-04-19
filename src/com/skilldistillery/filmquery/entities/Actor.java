@@ -40,6 +40,13 @@ public class Actor {
 				.append(lastName).append("]");
 		return builder.toString();
 	}
+	
+	public String getFullName() {
+		String fullName = firstName + lastName;
+		return fullName;
+		
+	}
+	
 	public String showActorDataSimple() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Actor: ")

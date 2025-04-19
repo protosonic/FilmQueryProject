@@ -1,7 +1,6 @@
 package com.skilldistillery.filmquery.entities;
 
 public class Film {
-	// Field for each of the tables columns
 	private int id;
 	private String title;
 	private String description;
@@ -14,12 +13,10 @@ public class Film {
 	private String rating;
 	private String specailFeatures;
 
-	// no-arg ctor
 	public Film() {
 		super();
 	}
 
-	// get/set
 	public int getId() {
 		return id;
 	}
@@ -108,9 +105,9 @@ public class Film {
 		this.specailFeatures = specailFeatures;
 	}
 
-	// toString
+	// toString for testing
 	@Override
-	public String toString() { // fix format
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Film [id=").append(id).append(", title=").append(title).append(", description=")
 				.append(description).append(", releaseYear=").append(releaseYear).append(", language=").append(language)
@@ -120,35 +117,30 @@ public class Film {
 		return builder.toString();
 	}
 
-	
-	// methods
+	// User story #2
 	public String showFilmDataSimple() {
 		String data = null;
-		
+
 		StringBuilder builder = new StringBuilder();
-		builder.append("---------FILM--------\n" + title) 
-				.append("\n(" + releaseYear + ")")
-				.append("\n" + language) // User story #4
-				.append("\n[Rated " + rating + "]\n")
-				.append("\n\"" + description + "\"\n")
+		builder.append("---------FILM--------\n" + title).append("\n(" + releaseYear + ")").append("\n" + language) // User
+																													// story
+																													// #4
+				.append("\n[Rated " + rating + "]\n").append("\n\"" + description + "\"\n")
 				.append("\n---------------------");
 		return builder.toString();
 	}
-	
+
 	public String showFilmDataAll() {
 		String data = null;
-		
+
 		StringBuilder builder = new StringBuilder();
-		builder.append("---------FILM INFO---------\n")
-				.append("Title: " + title)
-				.append("\nRelease Year: " + releaseYear )
-				.append("\n\n\"" + description + "\"\n")
-				.append("\nID: " + id).append("\nLanguage: " + language)
-				.append("\nRental Duration: ").append(rentalDuration).append(" Days\nRental Rate: ").append(rentalRate)
-				.append("\nLength: ").append(length).append("\nReplacement Cost: $").append(replacementCost)
-				.append("\nRating: ").append(rating).append("\nSpecial Features: ").append(specailFeatures);
+		builder.append("---------FILM INFO---------\n").append("Title: " + title)
+				.append("\nRelease Year: " + releaseYear).append("\n\n\"" + description + "\"\n").append("\nID: " + id)
+				.append("\nLanguage: " + language).append("\nRental Duration: ").append(rentalDuration)
+				.append(" Days\nRental Rate: ").append(rentalRate).append("\nLength: ").append(length)
+				.append("\nReplacement Cost: $").append(replacementCost).append("\nRating: ").append(rating)
+				.append("\nSpecial Features: ").append(specailFeatures);
 		return builder.toString();
 	}
-
 
 }
