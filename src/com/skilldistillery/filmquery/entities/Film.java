@@ -127,9 +127,9 @@ public class Film {
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append("---------FILM--------\n" + title)
-				.append("\n(" + releaseYear + ")")
-				.append("\n\n" + description)
-				.append("\n\n---------------------");
+				.append("\n(" + releaseYear + ")\n")
+				.append("\n\"" + description + "\"\n")
+				.append("\n---------------------");
 		return builder.toString();
 	}
 	
@@ -137,13 +137,12 @@ public class Film {
 		String data = null;
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append("---------FILM--------\n" + title)
-				.append("\n(" + releaseYear + ")")
-				.append("\n\n" + description)
-				.append("\n\n---------------------")
-				
-				.append("\n\n---------INFO---------").append("\nID: " + id).append("\nLanguage_ID: " + language)
-				.append("\nDuration: ").append(rentalDuration).append("\nRental Rate: ").append(rentalRate)
+		builder.append("---------FILM INFO---------\n")
+				.append("Title: " + title)
+				.append("\nRelease Year: " + releaseYear )
+				.append("\n\n\"" + description + "\"\n")
+				.append("\nID: " + id).append("\nLanguage: " + language)
+				.append("\nRental Duration: ").append(rentalDuration).append(" Days\nRental Rate: ").append(rentalRate)
 				.append("\nLength: ").append(length).append("\nReplacement Cost: $").append(replacementCost)
 				.append("\nRating: ").append(rating).append("\nSpecial Features: ").append(specailFeatures);
 		return builder.toString();

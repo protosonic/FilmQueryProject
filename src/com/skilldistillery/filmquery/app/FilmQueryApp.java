@@ -32,51 +32,89 @@ public class FilmQueryApp {
 	}
 
 	private void startUserInterface(Scanner input) {
-		boolean keepGoin = true;
+		boolean keepGoing = true;
 		
-		while (keepGoin) {
-			String choice = input.nextLine();
+		do {
 			printMainMenu();
-			switch(choice) {
-				case "1": {
+			String mainChoice = input.nextLine();
+			switch(mainChoice) {
+				case "1": { // Show SIMPLE film data by search id
 					System.out.println("\nEnter film ID to search: \n");
+					int inputId = input.nextInt();
+					printFilmSubMenu();
+					System.out.println(returnFilmByFilmId(inputId).showFilmDataSimple() + "\n"); 
+					input.nextLine();
+					String filmSubChoice = input.nextLine();
+					
+					switch(filmSubChoice) {
+						case "1": { // Show ALL film data by searched id
+							System.out.println(returnFilmByFilmId(inputId).showFilmDataAll() + 
+									"\nGenre: " + showCategoryByFilmId(inputId) + 
+									"\n\nPress Enter to continue...\n");
+							input.nextLine();
+							break;
+						}
+						case "2": { // Return to main menu
+							keepGoing = true;
+							break;
+						}
+					}
 					break;
 					}
-				case "2": {
+				case "2": { // Show list of films matching keyword search provided by user
+					System.out.println("Enter keyword to search: \n");
+					String keyword = input.nextLine();
+					listFilmsByKeyword(keyword);
+					System.out.println("\nPress Enter to continue...");
+					input.nextLine();
 					break;
 				}
-				case "3": {
+				case "3": { // Exit the application
+					keepGoing = false;
 					break;
 				}
 			}
-		}
+		} while (keepGoing);
 	}
-
-	private Film showFilmByFilmId(int id) {
+	
+	// Returns Film object determined by film_id provided by user
+	private Film returnFilmByFilmId(int id) { // Film return type for method chaining later
 		Film film = db.findFilmById(id);
 		return film;
 	}
-
-	private void showCategoryByFilmId(int film_id) {
+	// Returns film category String determined by film_id provided by user
+	private String showCategoryByFilmId(int film_id) { // String return type for method chaining later
 		String category = db.findCategoryByFilmId(film_id);
-		System.out.println(category);
+		category = category + "\n--------------------------";
+		return category;
 	}
 
+	// Prints list of films determined by keyword search provided by user
 	private void listFilmsByKeyword(String keyword) {
-		List<Film> filmsByKeyword = db.findFilmByKeyword(keyword);
-		if (keyword == null) {
+		if (keyword == null || keyword.trim().isEmpty()) {
 			System.out.println("Please enter a keyword to search");
-		}
-		System.out.println("---Search Results---");
-		System.out.println("Keyword: " + keyword + "\n");
-		for (Film film : filmsByKeyword) {
-			if (film == null) {
-				System.out.println("Search returned empty...");
+			return;
+		} else {
+		
+			List<Film> filmsByKeyword = db.findFilmByKeyword(keyword);
+			
+			if (filmsByKeyword.isEmpty()) {
+				System.out.println("No results found for this keyword");
+				
+			} 
+			System.out.println("---Search Results---");
+			System.out.println("Keyword: " + keyword + "\n");
+			for (Film film : filmsByKeyword) {
+				if (film == null) {
+					System.out.println("Search returned empty...");
+				}
+				System.out.println(film.showFilmDataSimple());
+				
 			}
-			System.out.println(film.showFilmDataSimple());
 		}
 	}
 
+	// Prints list of actors determined by film_id provided by user
 	private void listActorsByFilmId(Integer id) {
 		List<Actor> actorByFilm = db.findActorsByFilmId(id);
 		if (id == null) {
@@ -89,10 +127,10 @@ public class FilmQueryApp {
 		}
 	}
 
-	private List<String> listCopiesByFilmId(int filmId) {
+	// Prints list of copies of a particular film determined by film_id provided by user
+	private void listCopiesByFilmId(int filmId) {
 		List<String> copies = db.findFilmCopiesByFilmId(filmId);
-//		System.out.println(copies);
-		return copies;
+		System.out.println(copies);
 	}
 	
 	private void printMainMenu() {
@@ -103,9 +141,9 @@ public class FilmQueryApp {
 	}
 	
 	private void printFilmSubMenu() {
-		System.out.println("-----FILM DETAILS-----");
+		System.out.println("-----FILM MENU-----");
 		System.out.println("1. View all Film Details ");
-		System.out.println("2. Return to Main Menu");
+		System.out.println("2. Return to Main Menu\n");
 	}
 	
 	private void printWelcomeMessage(Scanner input) {
