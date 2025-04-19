@@ -6,7 +6,7 @@ public class Film {
 	private String title;
 	private String description;
 	private int releaseYear;
-	private int language;
+	private String language;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
@@ -52,11 +52,11 @@ public class Film {
 		this.releaseYear = releaseYear;
 	}
 
-	public int getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(int language) {
+	public void setLanguage(String language) {
 		this.language = language;
 	}
 

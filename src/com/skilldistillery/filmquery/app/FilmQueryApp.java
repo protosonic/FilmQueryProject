@@ -14,61 +14,55 @@ public class FilmQueryApp {
 
 	public static void main(String[] args) {
 		FilmQueryApp app = new FilmQueryApp();
-		app.test();
-//    app.launch();
+//		app.test();
+    app.launch();
 	}
 
 	private void test() {
-		List<String> copies = db.findFilmCopiesByFilmId(11);
-		System.out.println(copies);
+		
 	}
 
 	private void launch() {
 		Scanner input = new Scanner(System.in);
-
+		
+		printWelcomeMessage(input);
 		startUserInterface(input);
 
 		input.close();
 	}
 
 	private void startUserInterface(Scanner input) {
-//  User story #1
-//	  The user is presented with a menu in which they can choose to:
-//		  Look up a film by its id.
-//		  Look up a film by a search keyword.
-//		  Exit the application.
-
-//	  User Story 2
-//	  	If the user looks up a film by id, they are prompted to enter the film id. 
-//	  	If the film is not found, they see a message saying so. 
-//	 	If the film is found, its title, year, rating, and description are displayed.
-
-//	  User Story 3
-//	  	If the user looks up a film by search keyword, they are prompted to enter it.
-//	 	If no matching films are found, they see a message saying so. 
-//	  	Otherwise, they see a list of films for which the search term was found anywhere in 
-//	  	the title or description, with each film displayed exactly as it is for User Story 2.
-
-//	  User Story 4
-//		When a film is displayed, its language (English,Japanese, etc.) is displayed, 
-//		in addition to the film's title, year, rating, and description.
-
-//	  User Story 5
-//	  	When a film is displayed, the list of actors in its cast is displayed, 
-//	  	in addition to the film's title, year, rating, description, and language.
+		boolean keepGoin = true;
+		
+		while (keepGoin) {
+			String choice = input.nextLine();
+			printMainMenu();
+			switch(choice) {
+				case "1": {
+					System.out.println("\nEnter film ID to search: \n");
+					break;
+					}
+				case "2": {
+					break;
+				}
+				case "3": {
+					break;
+				}
+			}
+		}
 	}
 
-	public void showFilmByID(int id) {
+	private Film showFilmByFilmId(int id) {
 		Film film = db.findFilmById(id);
-		System.out.println(film);
+		return film;
 	}
-	
-	public void showCategoryByFilmId(int film_id) {
+
+	private void showCategoryByFilmId(int film_id) {
 		String category = db.findCategoryByFilmId(film_id);
 		System.out.println(category);
 	}
 
-	public void listFilmsByKeyword(String keyword) {
+	private void listFilmsByKeyword(String keyword) {
 		List<Film> filmsByKeyword = db.findFilmByKeyword(keyword);
 		if (keyword == null) {
 			System.out.println("Please enter a keyword to search");
@@ -83,7 +77,7 @@ public class FilmQueryApp {
 		}
 	}
 
-	public void listActorsByFilmId(Integer id) {
+	private void listActorsByFilmId(Integer id) {
 		List<Actor> actorByFilm = db.findActorsByFilmId(id);
 		if (id == null) {
 			System.out.println("Please enter an actor id to search");
@@ -95,4 +89,39 @@ public class FilmQueryApp {
 		}
 	}
 
+	private List<String> listCopiesByFilmId(int filmId) {
+		List<String> copies = db.findFilmCopiesByFilmId(filmId);
+//		System.out.println(copies);
+		return copies;
+	}
+	
+	private void printMainMenu() {
+		System.out.println("-----MAIN MENU-----");
+		System.out.println("1. Search Films by ID");
+		System.out.println("2. Search Films by Keyword");
+		System.out.println("3. Exit");
+	}
+	
+	private void printFilmSubMenu() {
+		System.out.println("-----FILM DETAILS-----");
+		System.out.println("1. View all Film Details ");
+		System.out.println("2. Return to Main Menu");
+	}
+	
+	private void printWelcomeMessage(Scanner input) {
+		System.out.println(
+			    "  _____ __  __ _____            ____     \n" +
+			    " |_   _|  \\/  |  __ \\          |  _ \\    \n" +
+			    "   | | | \\  / | |  | | ___  ___| |_) |___\n" +
+			    "   | | | |\\/| | |  | |/ _ \\/ _ \\  _ <_  /\n" +
+			    "  _| | | |  | | |__| |  __/  __/ |_) / / \n" +
+			    " |_____|_|  |_|_____/ \\___|\\___|____/___|\n");
+	    System.out.println("\t    Copyright \u00A9 2025 "
+	    		+ "\n\t  DeBruin Industries LLC. "
+	    		+ "\n\n\t   Welcome to IMDeeBz!"
+	    		+ "\n\t  Live, Laugh, Le'search"
+	    		+ "\n\n Press Enter to continue...");
+	    input.nextLine();
+	    
+	}
 }

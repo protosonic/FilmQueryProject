@@ -31,7 +31,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-			String sql = "SELECT * FROM film WHERE id = ?";
+			String sql = "SELECT f.*, l.name FROM film f JOIN language l ON f.language_id = l.id WHERE f.id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 
@@ -43,7 +43,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setTitle(rs.getString("title"));
 				film.setDescription(rs.getString("description"));
 				film.setReleaseYear(rs.getInt("release_year"));
-				film.setLanguage(rs.getInt("language_id"));
+				film.setLanguage(rs.getString("l.name"));
 				film.setRentalDuration(rs.getInt("rental_duration"));
 				film.setRentalRate(rs.getDouble("rental_rate"));
 				film.setLength(rs.getInt("length"));
@@ -126,7 +126,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-			String sql = "SELECT * FROM film WHERE title LIKE ? OR description LIKE ? ";
+			String sql = "SELECT f.*, l.name FROM film f JOIN language l ON f.language_id =l.id WHERE title LIKE ? OR description LIKE ? ";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1,"%" + keyword + "%");
 			stmt.setString(2,"%" + keyword + "%");
@@ -139,7 +139,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setTitle(rs.getString("title"));
 				film.setDescription(rs.getString("description"));
 				film.setReleaseYear(rs.getInt("release_year"));
-				film.setLanguage(rs.getInt("language_id"));
+				film.setLanguage(rs.getString("l.name"));			
 				film.setRentalDuration(rs.getInt("rental_duration"));
 				film.setRentalRate(rs.getDouble("rental_rate"));
 				film.setLength(rs.getInt("length"));
@@ -165,7 +165,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-			String sql = "SELECT c.name FROM category c JOIN film_category fc ON c.id = fc.category_id WHERE fc.film_id = ?";
+			String sql = "SELECT c.name " +
+						 "FROM category c " +
+						 "JOIN film_category fc ON c.id = fc.category_id " + 
+						 "WHERE fc.film_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 
