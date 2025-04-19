@@ -122,7 +122,7 @@ public class Film {
 
 	
 	// methods
-	public String showByFilmData() {
+	public String showFilmDataSimple() {
 		String data = null;
 		
 		StringBuilder builder = new StringBuilder();
@@ -133,7 +133,7 @@ public class Film {
 		return builder.toString();
 	}
 	
-	public String showAllByFilmData() {
+	public String showFilmDataAll() {
 		String data = null;
 		
 		StringBuilder builder = new StringBuilder();

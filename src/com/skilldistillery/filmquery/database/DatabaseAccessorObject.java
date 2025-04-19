@@ -159,7 +159,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public String filmCategoriesByFilmId(int filmId) {
+	public String findCategoryByFilmId(int filmId) {
 		String category = null;
 
 		try {
@@ -182,5 +182,40 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return category;
 	}
+	
+	public List<String> findFilmCopiesByFilmId(int filmId) {
+		List<String> copies = new ArrayList<>();
+		try {
+			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+			String sql = "SELECT i.store_id, i.media_condition, i.last_update, s.address_id, a.address " +
+			             "FROM inventory_item i " +
+			             "JOIN store s ON s.id = i.store_id " +
+			             "JOIN address a ON s.address_id = a.id " +
+			             "WHERE i.film_id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				String entry = "\n----------------------\n" +
+				               "Store ID: " + rs.getInt("store_id") +
+				               "\nStore Address: " + rs.getString("address") +
+				               "\nCondition: " + rs.getString("media_condition") +
+				               "\nLast Update: " + rs.getString("last_update");
+				copies.add(entry);
+			}
+
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return copies;
+	}
+
 
 }

@@ -40,14 +40,14 @@ public class Actor {
 				.append(lastName).append("]");
 		return builder.toString();
 	}
-	public String showActorSimple() {
+	public String showActorDataSimple() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Actor: ")
 		.append(firstName + " " + lastName);
 		return builder.toString();
 	}
 	
-	public String showActorAll() {
+	public String showActorDataAll() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("---------------------\n")
 		.append(firstName + " " + lastName)
