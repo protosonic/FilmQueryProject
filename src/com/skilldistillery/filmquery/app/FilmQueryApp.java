@@ -19,11 +19,8 @@ public class FilmQueryApp {
   }
 
   private void test() {
-//    Film film = db.findFilmById(34);
-//    System.out.println(film.showByFilmData());
-//    System.out.println(film.showAllByFilmData());
-	  listActorsByFilmId(21);
-	  listFilmsByKeyword("academy");  
+	   String category = db.filmCategoriesByFilmId(14);
+	   System.out.println(category);
 	  }
 
   private void launch() {
@@ -59,6 +56,11 @@ public class FilmQueryApp {
 //	  User Story 5
 //	  	When a film is displayed, the list of actors in its cast is displayed, 
 //	  	in addition to the film's title, year, rating, description, and language.
+  }
+  
+  public void printFilmByID(int id) {
+	    Film film = db.findFilmById(id);
+	    System.out.println(film);
   }
   
   public void listFilmsByKeyword(String keyword) {
