@@ -4,9 +4,9 @@ public class Actor {
 	private int id;
 	private String firstName;
 	private String lastName;
-	
+
 	public Actor() {
-		
+
 	}
 
 	public int getId() {
@@ -40,27 +40,24 @@ public class Actor {
 				.append(lastName).append("]");
 		return builder.toString();
 	}
-	
+
 	public String getFullName() {
 		String fullName = firstName + lastName;
 		return fullName;
-		
+
 	}
-	
+
 	public String showActorDataSimple() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Actor: ")
-		.append(firstName + " " + lastName);
+		builder.append("Actor: ").append(firstName + " " + lastName);
 		return builder.toString();
 	}
-	
+
 	public String showActorDataAll() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("---------------------\n")
-		.append(firstName + " " + lastName)
-		.append("\nID: " + id)
-		.append("\n---------------------\n");
+		builder.append("---------------------\n").append(firstName + " " + lastName).append("\nID: " + id)
+				.append("\n---------------------\n");
 		return builder.toString();
 	}
-	
+
 }

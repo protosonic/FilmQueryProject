@@ -43,7 +43,6 @@ public class FilmQueryApp {
 				int inputId = input.nextInt();
 
 				// User story #2
-				// Check if
 				Film film = returnFilmByFilmId(inputId);
 				if (film == null) {
 					System.out.println("No film found with ID: " + inputId);
@@ -60,11 +59,20 @@ public class FilmQueryApp {
 					switch (filmSubChoice) {
 					case "1": { // Show ALL film data by searched id
 						System.out.println(returnFilmByFilmId(inputId).showFilmDataAll() + "\nGenre: "
-								+ showCategoryByFilmId(inputId) + "\n-----------CAST-----------" + listActorsByFilmId(inputId) + "\n\nPress Enter to continue...\n");
+								+ showCategoryByFilmId(inputId) + "\n\nPress Enter to continue...\n");
 						input.nextLine();
 						break;
 					}
-					case "2": { // Return to main menu
+					case "2": {
+						System.out.println("\n-----------CAST-----------\n" + listActorsByFilmId(inputId)
+								+ "\n\nPress Enter to continue...\n");
+						break;
+
+					}
+					case "3": {
+						System.out.println(db.findFilmCopiesByFilmId(inputId));
+					}
+					case "4": { // Return to main menu
 						keepGoing = true;
 						break;
 					}
@@ -136,7 +144,7 @@ public class FilmQueryApp {
 			}
 		}
 	}
-	
+
 	// User story #5
 	// Printing list of actors determined by film_id provided by user
 	private String listActorsByFilmId(Integer id) {
@@ -148,7 +156,7 @@ public class FilmQueryApp {
 				return "No actors found for this film";
 			}
 		}
-		
+
 		StringBuilder builder = new StringBuilder();
 		for (Actor actor : actorByFilm) {
 			builder.append("\n-" + actor.getFullName());
@@ -156,7 +164,8 @@ public class FilmQueryApp {
 		return builder.toString();
 	}
 
-	// Printing list of copies of a particular film determined by film_id provided by user
+	// Printing list of copies of a particular film determined by film_id provided
+	// by user
 	private void listCopiesByFilmId(int filmId) {
 		List<String> copies = db.findFilmCopiesByFilmId(filmId);
 		System.out.println(copies);
@@ -172,7 +181,9 @@ public class FilmQueryApp {
 	private void printFilmSubMenu() {
 		System.out.println("-----FILM MENU-----");
 		System.out.println("1. View all Film Details ");
-		System.out.println("2. Return to Main Menu\n");
+		System.out.println("2. View Film Cast ");
+		System.out.println("3. View Film Copies and Details ");
+		System.out.println("4. Return to Main Menu\n");
 	}
 
 	private void printWelcomeMessage(Scanner input) {
@@ -180,18 +191,18 @@ public class FilmQueryApp {
 				+ " |_   _|  \\/  |  __ \\          |  _ \\    \n" + "   | | | \\  / | |  | | ___  ___| |_) |___\n"
 				+ "   | | | |\\/| | |  | |/ _ \\/ _ \\  _ <_  /\n" + "  _| | | |  | | |__| |  __/  __/ |_) / / \n"
 				+ " |_____|_|  |_|_____/ \\___|\\___|____/___|\n");
-		System.out.println("\t   Welcome to IMDeeBz!" + "\n\t  Live, Laugh, Le'search" + "\n\n Press Enter to continue...");
+		System.out.println(
+				"\t   Welcome to IMDeeBz!" + "\n\t  Live, Laugh, Le'search" + "\n\n Press Enter to continue...");
 		input.nextLine();
 	}
-	
+
 	private void printExitMessage() {
 		System.out.println("  _____ __  __ _____            ____     \n"
 				+ " |_   _|  \\/  |  __ \\          |  _ \\    \n" + "   | | | \\  / | |  | | ___  ___| |_) |___\n"
 				+ "   | | | |\\/| | |  | |/ _ \\/ _ \\  _ <_  /\n" + "  _| | | |  | | |__| |  __/  __/ |_) / / \n"
 				+ " |_____|_|  |_|_____/ \\___|\\___|____/___|\n");
-		System.out.println("\t    Copyright \u00A9 2025 " + "\n\t  DeBruin Industries LLC. " +
-				"\n\nThank you for choosing IMDeeBz for your Le'searches!" + 
-				"\n\t       Goodbye! <3");
-	
+		System.out.println("\t    Copyright \u00A9 2025 " + "\n\t  DeBruin Industries LLC. "
+				+ "\n\nThank you for choosing IMDeeBz for your Le'searches!" + "\n\t       Goodbye! <3");
+
 	}
 }

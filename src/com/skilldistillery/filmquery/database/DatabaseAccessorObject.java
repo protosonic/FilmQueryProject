@@ -128,8 +128,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			String sql = "SELECT f.*, l.name FROM film f JOIN language l ON f.language_id =l.id WHERE title LIKE ? OR description LIKE ? ";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1,"%" + keyword + "%");
-			stmt.setString(2,"%" + keyword + "%");
+			stmt.setString(1, "%" + keyword + "%");
+			stmt.setString(2, "%" + keyword + "%");
 
 			ResultSet rs = stmt.executeQuery();
 
@@ -139,7 +139,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film.setTitle(rs.getString("title"));
 				film.setDescription(rs.getString("description"));
 				film.setReleaseYear(rs.getInt("release_year"));
-				film.setLanguage(rs.getString("l.name"));			
+				film.setLanguage(rs.getString("l.name"));
 				film.setRentalDuration(rs.getInt("rental_duration"));
 				film.setRentalRate(rs.getDouble("rental_rate"));
 				film.setLength(rs.getInt("length"));
@@ -165,10 +165,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-			String sql = "SELECT c.name " +
-						 "FROM category c " +
-						 "JOIN film_category fc ON c.id = fc.category_id " + 
-						 "WHERE fc.film_id = ?";
+			String sql = "SELECT c.name " + "FROM category c " + "JOIN film_category fc ON c.id = fc.category_id "
+					+ "WHERE fc.film_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 
@@ -185,17 +183,15 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return category;
 	}
-	
+
 	public List<String> findFilmCopiesByFilmId(int filmId) {
 		List<String> copies = new ArrayList<>();
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-			String sql = "SELECT i.store_id, i.media_condition, i.last_update, s.address_id, a.address " +
-			             "FROM inventory_item i " +
-			             "JOIN store s ON s.id = i.store_id " +
-			             "JOIN address a ON s.address_id = a.id " +
-			             "WHERE i.film_id = ?";
+			String sql = "SELECT i.store_id, i.media_condition, i.last_update, s.address_id, a.address "
+					+ "FROM inventory_item i " + "JOIN store s ON s.id = i.store_id "
+					+ "JOIN address a ON s.address_id = a.id " + "WHERE i.film_id = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
@@ -203,11 +199,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				String entry = "\n----------------------\n" +
-				               "Store ID: " + rs.getInt("store_id") +
-				               "\nStore Address: " + rs.getString("address") +
-				               "\nCondition: " + rs.getString("media_condition") +
-				               "\nLast Update: " + rs.getString("last_update");
+				String entry = "\n----------------------\n" + "Store ID: " + rs.getInt("store_id") + "\nStore Address: "
+						+ rs.getString("address") + "\nCondition: " + rs.getString("media_condition")
+						+ "\nLast Update: " + rs.getString("last_update");
 				copies.add(entry);
 			}
 
@@ -219,6 +213,5 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return copies;
 	}
-
 
 }
